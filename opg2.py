@@ -32,8 +32,8 @@ def calculation(V, name):
 
 # numberOfParticles = 10_000
 # numberOfSteps = 200
-numberOfParticles = 1_000 # 10 000 etter oppgave 2
-numberOfSteps = 50
+numberOfParticles = 1_000 
+numberOfSteps = 200
 
 V = {'k' : lambda x: 1,
      '-k*x' : lambda x: -x, 
