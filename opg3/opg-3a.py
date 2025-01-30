@@ -1,6 +1,5 @@
 import numpy as np
 import matplotlib.pyplot as plt
-import scipy.stats as stats
 import random
 
 class Particle:
@@ -8,6 +7,7 @@ class Particle:
         self.id = id
         self.xPos = 0
         self.time = 0
+        self.absxPos = 0
         self.sawtoothPotetial = potentialFunction
         self.constantPotetial = lambda x: 1
         self.activePotetial = self.constantPotetial
@@ -37,23 +37,20 @@ class Particle:
         if self.time % T_p == 0: # every 200 time steps switch potential
             self.potentialSwitch()
         
-        
         prob = random.uniform(0, 1)
-
         if prob <= self.pMinus():
             self.xPos -= 1
+            self.absxPos -= 1
             if self.xPos < -100:
                 self.xPos = 100
 
-        if prob > 1 - self.pPlus():
+        elif prob > 1 - self.pPlus():
             self.xPos += 1
+            self.absxPos += 1
             if self.xPos > 100:
                 self.xPos = -100
-        else:
-            self.xPos = self.xPos
+
     
-        if self.time % (2*T_p) == 0: # every 400 time steps return True (record pos in main)
-            return True
         
     def getPosition(self):
         return self.xPos
@@ -85,28 +82,23 @@ timeSteps = cycles * 2 * T_p
 alpha = 0.1
 k = 1
 
-cycleAxis = np.linspace(0, cycles, cycles + 1)
-
 Particles = [Particle(sawtoothPotential, beta_k, i) for i, _ in enumerate(range(N_p))]
+ParticlesAbsPos = [[] for _ in range(N_p)]
+for i, particle in enumerate(Particles): # simulates all particles
+    for _ in range(timeSteps): # run walkstep (simulation) for all timesteps 
+        particle.walkStep(T_p)
+        ParticlesAbsPos[i].append(particle.absxPos)
 
-for particle in Particles: # simulates all particles
-    PositionEndCycle = [0]
-    for i, _ in enumerate(range(timeSteps)): # run walkstep (simulation) for all timesteps 
-        if particle.walkStep(T_p):
-            PositionEndCycle.append(particle.getPosition())        
-    plt.plot(cycleAxis, PositionEndCycle, 'o', label=f"Particle {particle}")
 
-plt.title("Position of particles at end of cycle")
-plt.xlabel("Cycle")
-plt.ylabel("Position on x-axis")
+AbsolutePosAxis = np.linspace(0, timeSteps, timeSteps)
+for i, Pos in enumerate(ParticlesAbsPos):
+    plt.plot(AbsolutePosAxis, Pos, markersize=1, label=f"Particle {i + 1}")
+
+plt.title("Absolute x position of particles")
+plt.xlabel(f"Time steps [0 to {timeSteps}]")
+plt.ylabel("Absolute x position")
+plt.xticks(np.arange(0, timeSteps + 1, 200))
+plt.gca().set_xticklabels([])
+plt.grid(True, which='both', axis='x', linestyle='--', linewidth=0.5)
+plt.legend()
 plt.show()
-
-# test = [0] # plot every time step
-# for i, _ in enumerate(range(timeSteps)):
-#     for particle in Particles:
-#         particle.walkStep(T_p)
-#         test.append(particle.getPosition())
-#         break
-# testAxis = np.linspace(0, timeSteps, timeSteps + 1)
-# plt.plot(testAxis, test, 'ro', markersize=1)
-# plt.show()
