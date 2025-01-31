@@ -14,10 +14,9 @@ def sawtoothPotential(x): # can only get values between -100 and 100
         return False
     
 
-
 alpha = 0.8
 T_p = 500 
-N_p = N_x * 1
+N_p = N_x * 1 # 12
 cycles = 10
 timeSteps = cycles * 2 * T_p
 
@@ -25,26 +24,16 @@ Particles = [Particle(sawtoothPotential, i, startPos)
               for i, startPos in enumerate(np.linspace(-100, 100, N_p))]
 
 start = time.time()
-ParticlesAbsPos = [[] for _ in range(N_p)]
+normalizedParticleCurrent = []
+for i, _ in enumerate(range(timeSteps)): # Iterate over timesteps
+    print(f"Simulating timestep {i-999}-{i+1} at time {round(time.time()-start, 3)} s") if (i + 1) % 1000 == 0 else None
+    [particle.walkStep(T_p) for particle in Particles] # runs sim for every particle
+    movementCount = Counter(particle.movement for particle in Particles)
+    normalizedParticleCurrent.append((movementCount[1] - movementCount[-1]) / N_p)
 
-for _ in range(timeSteps): # Iterate over timesteps
-    for i, particle in enumerate(Particles): # simulates all particles
-        particle.walkStep(T_p)
-        ParticlesAbsPos[i].append(particle.absxPos)
-        print(f"Simulating particle {i + 1} to {i + 101} at time {round(time.time()-start, 3)} s") if (i + 1) % 100 == 0 else None
-        if i % 2 * T_p == 0:
-            pass
-        # normalizedParticleCurrent = 
+print(f"Simulation took {round(time.time() - start, 2)} s with average time per particle {round((time.time()-start)*1000/N_p, 1)} ms")
 
-print(f"Simulation took {round(time.time()-start, 2)} s with average time per particle {round((time.time()-start)*1000/N_p, 1)} ms")
-
-for i, Pos in enumerate(ParticlesAbsPos):
-    AbsolutePosAxis = np.linspace(0, len(Pos[::400]), len(Pos[::400]))
-    plt.plot(AbsolutePosAxis, Pos[::400], markersize=1, label=f"Particle {i + 1}")
-
-
-# plt.title("Absolute x position of particles")
-# plt.xlabel(f"Cycles")
-# plt.ylabel("Absolute x position")
-# plt.legend()
-# plt.show()
+split_array = np.array_split(normalizedParticleCurrent, cycles)
+averageCurrent = [float(np.mean(part)) for part in split_array]
+for i, val in enumerate(averageCurrent):
+    print(f"cycle {i+1}: {val:.2e}")  # Adjust decimal places as needed
