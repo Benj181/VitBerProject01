@@ -1,7 +1,7 @@
 from particle import Particle
 from config import *
 
-def sawtoothPotential(x): # can only get values between -100 and 100
+def sawtoothPotential(x, alpha): # can only get values between -100 and 100
     if x >= -N_x and x < -(1 - alpha) * N_x:
         return k * (x + N_x) / (alpha * N_x)
     if x >= -(1 - alpha) * N_x and x < 0:
@@ -13,13 +13,14 @@ def sawtoothPotential(x): # can only get values between -100 and 100
     else:
         return False
     
+    
 alpha = 0.1
 T_p = 200 # time steps per time interval
 N_p = 3 # number of particles
 cycles = 75
 timeSteps = cycles * 2 * T_p
 
-Particles = [Particle(sawtoothPotential, i) for i, _ in enumerate(range(N_p))]
+Particles = [Particle(sawtoothPotential, i, alpha) for i, _ in enumerate(range(N_p))]
 ParticlesAbsPos = [[] for _ in range(N_p)] # [[], [], []]
 for i, particle in enumerate(Particles): # simulates all particles
     for _ in range(timeSteps): # run walkstep [simulation] for all timesteps 

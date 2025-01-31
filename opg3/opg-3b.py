@@ -1,7 +1,7 @@
 from particle import Particle
 from config import *
 
-def sawtoothPotential(x): # can only get values between -100 and 100
+def sawtoothPotential(x, alpha): # can only get values between -100 and 100
     if x >= -N_x and x < -(1 - alpha) * N_x:
         return k * (x + N_x) / (alpha * N_x)
     if x >= -(1 - alpha) * N_x and x < 0:
@@ -13,6 +13,7 @@ def sawtoothPotential(x): # can only get values between -100 and 100
     else:
         return False
     
+    
 
 alpha = 0.8
 T_p = 500 
@@ -20,8 +21,8 @@ N_p = N_x * 12
 cycles = 10
 timeSteps = cycles * 2 * T_p
 
-Particles = [Particle(sawtoothPotential, i, startPos)
-              for i, startPos in enumerate(np.linspace(-100, 100, N_p))]
+Particles = [Particle(sawtoothPotential, i, startPos, alpha)
+              for i, startPos in enumerate(np.linspace(-N_x, N_x, N_p))]
 
 start = time.time()
 normalizedParticleCurrent = []

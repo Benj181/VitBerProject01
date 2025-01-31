@@ -1,28 +1,29 @@
 from config import random, np, beta_k
 
 class Particle:
-    def __init__(self, potentialFunction, id, startPos = 0):
+    def __init__(self, potentialFunction, id, alpha, startPos = 0):
+        self.alpha = alpha
         self.id = id
         self.xPos = startPos
         self.time = 0
         self.absxPos = 0
         self.movement = 0
         self.sawtoothPotetial = potentialFunction
-        self.constantPotetial = lambda x: 1
+        self.constantPotetial = lambda x, alpha: 1
         self.activePotetial = self.constantPotetial
         self.betak = beta_k
 
     def pPlus(self):
-        return 1 / (1 + np.exp(-self.betak * (self.activePotetial(self.xPos - 1)
-                                               - self.activePotetial(self.xPos + 1))) 
-                    + np.exp(-self.betak * (self.activePotetial(self.xPos)
-                                             - self.activePotetial(self.xPos + 1))))
+        return 1 / (1 + np.exp(-self.betak * (self.activePotetial(self.xPos - 1, self.alpha)
+                                               - self.activePotetial(self.xPos + 1, self.alpha))) 
+                    + np.exp(-self.betak * (self.activePotetial(self.xPos, self.alpha)
+                                             - self.activePotetial(self.xPos + 1, self.alpha))))
     
     def pMinus(self):
-        return 1 / (1 + np.exp(-self.betak * (self.activePotetial(self.xPos + 1)
-                                               - self.activePotetial(self.xPos - 1))) 
-                    + np.exp(-self.betak * (self.activePotetial(self.xPos)
-                                             - self.activePotetial(self.xPos - 1))))
+        return 1 / (1 + np.exp(-self.betak * (self.activePotetial(self.xPos + 1, self.alpha)
+                                               - self.activePotetial(self.xPos - 1, self.alpha))) 
+                    + np.exp(-self.betak * (self.activePotetial(self.xPos, self.alpha)
+                                             - self.activePotetial(self.xPos - 1, self.alpha))))
 
     def potentialSwitch(self):
         if self.activePotetial == self.constantPotetial:
