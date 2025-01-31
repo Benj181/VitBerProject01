@@ -2,10 +2,10 @@ from particle import Particle
 from functions import sawtoothPotential
 from config import *
 
-Particles = [Particle(sawtoothPotential, beta_k, i) for i, _ in enumerate(range(N_p))]
+Particles = [Particle(sawtoothPotential, i) for i, _ in enumerate(range(N_p))]
 ParticlesAbsPos = [[] for _ in range(N_p)] # [[], [], []]
 for i, particle in enumerate(Particles): # simulates all particles
-    for _ in range(timeSteps): # run walkstep (simulation) for all timesteps 
+    for _ in range(timeSteps): # run walkstep [simulation] for all timesteps 
         particle.walkStep(T_p)
         ParticlesAbsPos[i].append(particle.absxPos)
 

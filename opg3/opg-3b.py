@@ -2,7 +2,13 @@ from particle import Particle
 from functions import sawtoothPotential
 from config import *
 
-Particles = [Particle(sawtoothPotential, beta_k, i) for i, _ in enumerate(range(N_p))]
+alpha = 0.8
+T_p = 500 
+N_p = N_x * 12
+a = np.linspace(-100, 100, N_p)
+Particles = [Particle(sawtoothPotential, i, startPos)
+              for i, startPos in enumerate(np.linspace(-100, 100, N_p))]
+
 ParticlesAbsPos = [[] for _ in range(N_p)] # [[], [], []]
 for i, particle in enumerate(Particles): # simulates all particles
     for _ in range(timeSteps): # run walkstep (simulation) for all timesteps 

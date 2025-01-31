@@ -1,15 +1,15 @@
-from config import random, np
+from config import random, np, beta_k
 
 class Particle:
-    def __init__(self, potentialFunction, betak, id):
+    def __init__(self, potentialFunction, id, startPos = 0):
         self.id = id
-        self.xPos = 0
+        self.xPos = startPos
         self.time = 0
         self.absxPos = 0
         self.sawtoothPotetial = potentialFunction
         self.constantPotetial = lambda x: 1
         self.activePotetial = self.constantPotetial
-        self.betak = betak
+        self.betak = beta_k
 
     def pPlus(self):
         return 1 / (1 + np.exp(-self.betak * (self.activePotetial(self.xPos - 1)
