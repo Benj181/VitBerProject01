@@ -20,14 +20,13 @@ N_p = N_x * 1 # 12
 
 normalizedParticleCurrent = []
 averageCurrent = []
-alphaList = np.linspace(0, 1, 20) # 50
-# alphaList = [0.1, 0.5, 0.9]
+alphaList = np.linspace(0, 1, 10) # 50
 start = time.time()
 for i, alpha in enumerate(alphaList): # Iterate over different alphas
     Particles = [Particle(sawtoothPotential, i, alpha, startPos)
               for i, startPos in enumerate(np.linspace(-N_x, N_x, N_p))]
     temp = time.time()
-    print(f"{i}: Simulating for {alpha} as alpha")
+    print(f"{i}: Simulating for {round(alpha, 2)} as alpha")
     for i, _ in enumerate(range(int(2 * T_p ))): # Iterate over timesteps
         [particle.walkStep(T_p) for particle in Particles] # runs sim for every particle
         movementCount = Counter(particle.movement for particle in Particles)

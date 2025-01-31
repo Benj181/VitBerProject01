@@ -21,7 +21,7 @@ cycles = 75
 timeSteps = cycles * 2 * T_p
 
 Particles = [Particle(sawtoothPotential, i, alpha) for i, _ in enumerate(range(N_p))]
-ParticlesAbsPos = [[] for _ in range(N_p)] # [[], [], []]
+ParticlesAbsPos = [[] for _ in range(N_p)]
 for i, particle in enumerate(Particles): # simulates all particles
     for _ in range(timeSteps): # run walkstep [simulation] for all timesteps 
         particle.walkStep(T_p)

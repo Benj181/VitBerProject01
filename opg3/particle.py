@@ -53,6 +53,7 @@ class Particle:
                 self.xPos = -100
         else:
             self.movement = 0
+            
     def getPosition(self):
         return self.xPos
     

@@ -20,19 +20,19 @@ N_p = N_x * 1 # 40
 
 normalizedParticleCurrent = []
 averageCurrent = []
-T_pList = np.linspace(1, 1001, 50)
+T_pList = np.linspace(1, 1001, 20) # 50
 start = time.time()
 for i, T_p in enumerate(T_pList): # Iterate over different timeintervals
     Particles = [Particle(sawtoothPotential, i, alpha, startPos)
               for i, startPos in enumerate(np.linspace(-N_x, N_x, N_p))]
     temp = time.time()
-    # print(f"{i}: Simulating for {int(2*T_p)} as T_p")
+    print(f"{i}: Simulating for {int(2*T_p)} as T_p")
     for i, _ in enumerate(range(int(2 * T_p ))): # Iterate over timesteps
         [particle.walkStep(T_p) for particle in Particles] # runs sim for every particle
         movementCount = Counter(particle.movement for particle in Particles)
         normalizedParticleCurrent.append((movementCount[1] - movementCount[-1]) / N_p)
-    # print(f"Simulation took {round(time.time() - temp, 2)} s with average time per particle {round((time.time()-start)*1000/N_p, 1)} ms")
-    # print("-------------------------------------------")
+    print(f"Simulation took {round(time.time() - temp, 2)} s with average time per particle {round((time.time()-start)*1000/N_p, 1)} ms")
+    print("-------------------------------------------")
     averageCurrent.append(float(np.mean(normalizedParticleCurrent)))
 
 print(f"Total time: {round(time.time() - start, 2)} s")

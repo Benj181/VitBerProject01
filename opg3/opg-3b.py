@@ -17,11 +17,11 @@ def sawtoothPotential(x, alpha): # can only get values between -100 and 100
 
 alpha = 0.1
 T_p = 500 
-N_p = N_x * 1
+N_p = N_x * 12
 cycles = 10
 timeSteps = cycles * 2 * T_p
 
-Particles = [Particle(sawtoothPotential, i, alpha, startPos,)
+Particles = [Particle(sawtoothPotential, i, alpha, startPos)
               for i, startPos in enumerate(np.linspace(-N_x, N_x, N_p))]
 
 start = time.time()
