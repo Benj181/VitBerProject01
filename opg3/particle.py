@@ -6,6 +6,7 @@ class Particle:
         self.xPos = startPos
         self.time = 0
         self.absxPos = 0
+        self.movement = 0
         self.sawtoothPotetial = potentialFunction
         self.constantPotetial = lambda x: 1
         self.activePotetial = self.constantPotetial
@@ -37,17 +38,20 @@ class Particle:
         
         prob = random.uniform(0, 1)
         if prob <= self.pMinus():
+            self.movement = -1
             self.xPos -= 1
             self.absxPos -= 1
             if self.xPos < -100:
                 self.xPos = 100
 
         elif prob > 1 - self.pPlus():
+            self.movement = 1
             self.xPos += 1
             self.absxPos += 1
             if self.xPos > 100:
                 self.xPos = -100
-        
+        else:
+            self.movement = 0
     def getPosition(self):
         return self.xPos
     
