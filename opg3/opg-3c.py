@@ -23,7 +23,7 @@ averageCurrent = []
 T_pList = np.linspace(1, 1001, 50)
 start = time.time()
 for i, T_p in enumerate(T_pList): # Iterate over different timeintervals
-    Particles = [Particle(sawtoothPotential, i, startPos, alpha)
+    Particles = [Particle(sawtoothPotential, i, alpha, startPos)
               for i, startPos in enumerate(np.linspace(-N_x, N_x, N_p))]
     temp = time.time()
     # print(f"{i}: Simulating for {int(2*T_p)} as T_p")

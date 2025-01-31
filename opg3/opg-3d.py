@@ -20,10 +20,11 @@ N_p = N_x * 1 # 12
 
 normalizedParticleCurrent = []
 averageCurrent = []
-alphaList = np.linspace(0, 1, 50)
+alphaList = np.linspace(0, 1, 20) # 50
+# alphaList = [0.1, 0.5, 0.9]
 start = time.time()
 for i, alpha in enumerate(alphaList): # Iterate over different alphas
-    Particles = [Particle(sawtoothPotential, i, startPos, alpha)
+    Particles = [Particle(sawtoothPotential, i, alpha, startPos)
               for i, startPos in enumerate(np.linspace(-N_x, N_x, N_p))]
     temp = time.time()
     print(f"{i}: Simulating for {alpha} as alpha")
@@ -39,8 +40,8 @@ print(f"Total time: {round(time.time() - start, 2)} s")
 
 
 plt.plot(alphaList, averageCurrent)
-plt.xlabel("T_p")
+plt.xlabel("Alpha")
 plt.ylabel("Average current")
-plt.title("Average current over different T_p")
+plt.title("Average current over different Alpha")
 plt.grid()
 plt.show()
