@@ -1,27 +1,6 @@
-import numpy as np
-import matplotlib.pyplot as plt
 from particle import Particle
-
-def sawtoothPotential(x): # can only get values between -100 and 100
-    if x < -90 and x >= -100:
-        return k * x / (alpha * N_x) + k*10
-    elif x < 0 and x >= -90:
-        return - k * x / ((1 - alpha) * N_x)
-    elif x < 10 and x >= 0:
-        return k * x / (alpha * N_x)
-    elif x <= 100 and x >= 10:
-        return - k * x / ((1 - alpha) * N_x) + k*10 / 9
-    else:
-        return False
-
-T_p = 200 # time steps per time interval
-N_p = 3 # number of particles
-N_x = 100 # steps per potetial period
-beta_k = 1000
-cycles = 75
-timeSteps = cycles * 2 * T_p
-alpha = 0.1
-k = 1
+from functions import sawtoothPotential
+from config import *
 
 Particles = [Particle(sawtoothPotential, beta_k, i) for i, _ in enumerate(range(N_p))]
 ParticlesAbsPos = [[] for _ in range(N_p)] # [[], [], []]

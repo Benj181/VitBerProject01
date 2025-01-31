@@ -1,4 +1,5 @@
-import random
+from config import random, np
+
 class Particle:
     def __init__(self, potentialFunction, betak, id):
         self.id = id
