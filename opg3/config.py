@@ -1,6 +1,7 @@
 import random
 import numpy as np
 import matplotlib.pyplot as plt
+import time
 
 T_p = 200 # time steps per time interval
 N_p = 3 # number of particles
