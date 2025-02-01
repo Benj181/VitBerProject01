@@ -1,18 +1,6 @@
 from particle import Particle
 from config import *
 
-def sawtoothPotential(x, alpha): # can only get values between -100 and 100
-    if x >= -N_x and x < -(1 - alpha) * N_x:
-        return k * (x + N_x) / (alpha * N_x)
-    if x >= -(1 - alpha) * N_x and x < 0:
-        return - k * x / ((1 - alpha) * N_x)
-    if x >= 0 and x < alpha * N_x:
-        return k * x / (alpha * N_x)
-    if x >= alpha * N_x and x <= 100:
-        return - k * (x-N_x) / ((1 - alpha) * N_x)
-    else:
-        return False
-    
 start = time.time()
 
 T_p = 500
@@ -28,7 +16,7 @@ for i, alpha in enumerate(alphaList): # Iterate over different alphas
     Particles = [Particle(sawtoothPotential, i, alpha, startPos)
               for i, startPos in enumerate(np.linspace(-N_x, N_x, N_p))] # make list of particles
     temp = time.time()
-    
+
     print(f"{i}: Simulating for {round(alpha, 2)} as alpha")
     for i, _ in enumerate(range(int(2 * T_p ))): # Iterate over timesteps
         [particle.walkStep(T_p) for particle in Particles] # runs sim for every particle

@@ -1,18 +1,6 @@
 from particle import Particle
 from config import *
 
-def sawtoothPotential(x, alpha): # can only get values between -100 and 100
-    if x >= -N_x and x < -(1 - alpha) * N_x:
-        return k * (x + N_x) / (alpha * N_x)
-    if x >= -(1 - alpha) * N_x and x < 0:
-        return - k * x / ((1 - alpha) * N_x)
-    if x >= 0 and x < alpha * N_x:
-        return k * x / (alpha * N_x)
-    if x >= alpha * N_x and x <= 100:
-        return - k * (x-N_x) / ((1 - alpha) * N_x)
-    else:
-        return False
-    
     
 alpha = 0.1
 T_p = 200 # time steps per time interval
@@ -35,9 +23,3 @@ plt.xlabel(f"Cycles")
 plt.ylabel("Absolute x position")
 plt.legend()
 plt.show()
-
-
-
-# plt.xticks(np.arange(0, cycles, 1))
-# plt.gca().set_xticklabels([])
-# plt.grid(True, which='both', linestyle='--', linewidth=0.5)
