@@ -34,7 +34,7 @@ class Particle:
     def walkStep(self, T_p):
         self.time += 1
 
-        if self.time % T_p == 0: # every 200 time steps switch potential
+        if self.time % T_p == 0:
             self.potentialSwitch()
         
         prob = random.uniform(0, 1)
