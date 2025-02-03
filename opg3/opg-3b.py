@@ -17,7 +17,7 @@ Particles = [Particle(sawtoothPotential, i, alpha, startPos)
 normalizedParticleCurrent = []
 
 for i, _ in enumerate(range(timeSteps)): # Iterate over timesteps
-    print(f"Simulating timestep {i-999}-{i+1} at time {round(time.time()-start, 3)} s") if (i + 1) % 1000 == 0 else None
+    print(f"Simulating timestep {i + 1} at time {round(time.time()-start, 3)} s") if (i + 1) % 1000 == 0 else None
     [particle.walkStep(T_p) for particle in Particles] # runs sim for every particle
     movementCount = Counter(particle.movement for particle in Particles)
     normalizedParticleCurrent.append((movementCount[1] - movementCount[-1]) / N_p)
@@ -28,7 +28,7 @@ print(f"Simulation took {round(time.time() - start, 2)} s with average time per 
 split_array = np.array_split(normalizedParticleCurrent, cycles)
 averageCurrent = [float(np.mean(part)) for part in split_array] # average current per cycle
 for i, val in enumerate(averageCurrent):
-    print(f"cycle {i+1}: {val:.2e}")  # Adjust decimal places as needed
+    print(f"cycle {i+1}: {val:.2e}") 
 
 # ------------------------------------------------------------------------------------
 # New alpha value
@@ -38,7 +38,7 @@ Particles = [Particle(sawtoothPotential, i, alpha, startPos)
               for i, startPos in enumerate(np.linspace(-N_x, N_x, N_p))]
 
 for i, _ in enumerate(range(timeSteps)): # Iterate over timesteps
-    print(f"Simulating timestep {i-999}-{i+1} at time {round(time.time()-start, 3)} s") if (i + 1) % 1000 == 0 else None
+    print(f"Simulating timestep {i + 1} at time {round(time.time()-start, 3)} s") if (i + 1) % 1000 == 0 else None
     [particle.walkStep(T_p) for particle in Particles] # runs sim for every particle
     movementCount = Counter(particle.movement for particle in Particles)
     normalizedParticleCurrent.append((movementCount[1] - movementCount[-1]) / N_p)
