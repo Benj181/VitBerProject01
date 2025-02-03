@@ -5,17 +5,17 @@ from config import *
 start = time.time()
 
 alpha = 0.8
-N_p = N_x * 2 # 40
+N_p = N_x * 40 # 40
 
 
-normalizedParticleCurrent = []
 averageCurrent = []
 
-T_pList = np.linspace(1, 1001, 20) # 50
+T_pList = np.linspace(1, 1001, 50) # 50
 
 for i, T_p in enumerate(T_pList): # Iterate over different timeintervals
+    normalizedParticleCurrent = []
     Particles = [Particle(sawtoothPotential, i, alpha, startPos) #  make list of particles
-              for i, startPos in enumerate(np.linspace(-N_x, N_x, N_p))] 
+              for i, startPos in enumerate([0] * ( N_p // 2) + [100] * (N_p // 2))] 
     temp = time.time()
 
     print(f"{i}: Simulating for {int(2*T_p)} as T_p")
