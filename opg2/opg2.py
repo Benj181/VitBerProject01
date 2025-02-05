@@ -7,6 +7,7 @@ from lib import Particle
 
 def calculation(V, name):
     betakList = [0.01, 1, 100]
+    betakList = [1000]
     fig, ax = plt.subplots(1, 3, figsize=(12, 4))
 
     for i, betak in enumerate(betakList):
@@ -33,14 +34,14 @@ def calculation(V, name):
 # numberOfParticles = 10_000
 # numberOfSteps = 200
 numberOfParticles = 1_000 
-numberOfSteps = 200
+numberOfSteps = 500
 
 V = {'k' : lambda x: 1,
      '-k*x' : lambda x: -x, 
      'k(x/15 - np.cos(x/3))' : lambda x: x/15 - np.cos(x/3), 
      'k*x**4' : lambda x: x**4}
 
-# calculation(V['k'], "k")
+calculation(V['k'], "k")
 # calculation(V['-k*x'], "-k*x")
 # calculation(V['k(x/15 - np.cos(x/3))'], 'k(x/15 - np.cos(x/3))')
 # calculation(V['k*x**4'], 'k*x**4')

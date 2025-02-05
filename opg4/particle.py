@@ -1,7 +1,7 @@
-from config import random, np, beta_k
+from config import random, np
 
 class Particle:
-    def __init__(self, potentialFunction, alpha, id = False, startPos = 0):
+    def __init__(self, potentialFunction, alpha, startPos = 0, betak=1000, N_x=100, id = False):
         self.alpha = alpha
         self.id = id
         self.xPos = startPos
@@ -9,21 +9,22 @@ class Particle:
         self.absxPos = 0
         self.movement = 0
         self.sawtoothPotetial = potentialFunction
-        self.constantPotetial = lambda x, alpha: 1
+        self.constantPotetial = lambda x, alpha, N_x: 1
         self.activePotetial = self.constantPotetial
-        self.betak = beta_k
+        self.betak = betak
+        self.N_x = N_x
 
     def pPlus(self):
-        return 1 / (1 + np.exp(-self.betak * (self.activePotetial(self.xPos - 1, self.alpha)
-                                               - self.activePotetial(self.xPos + 1, self.alpha))) 
-                    + np.exp(-self.betak * (self.activePotetial(self.xPos, self.alpha)
-                                             - self.activePotetial(self.xPos + 1, self.alpha))))
+        return 1 / (1 + np.exp(-self.betak * (self.activePotetial(self.xPos - 1, self.alpha, self.N_x)
+                                               - self.activePotetial(self.xPos + 1, self.alpha, self.N_x))) 
+                    + np.exp(-self.betak * (self.activePotetial(self.xPos, self.alpha, self.N_x)
+                                             - self.activePotetial(self.xPos + 1, self.alpha, self.N_x))))
     
     def pMinus(self):
-        return 1 / (1 + np.exp(-self.betak * (self.activePotetial(self.xPos + 1, self.alpha)
-                                               - self.activePotetial(self.xPos - 1, self.alpha))) 
-                    + np.exp(-self.betak * (self.activePotetial(self.xPos, self.alpha)
-                                             - self.activePotetial(self.xPos - 1, self.alpha))))
+        return 1 / (1 + np.exp(-self.betak * (self.activePotetial(self.xPos + 1, self.alpha, self.N_x)
+                                               - self.activePotetial(self.xPos - 1, self.alpha, self.N_x))) 
+                    + np.exp(-self.betak * (self.activePotetial(self.xPos, self.alpha, self.N_x)
+                                             - self.activePotetial(self.xPos - 1, self.alpha, self.N_x))))
 
     def potentialSwitch(self):
         if self.activePotetial == self.constantPotetial:
@@ -42,15 +43,15 @@ class Particle:
             self.movement = -1
             self.xPos -= 1
             self.absxPos -= 1
-            if self.xPos < -100:
-                self.xPos = 100
+            if self.xPos < -self.N_x:
+                self.xPos = self.N_x
 
         elif prob > 1 - self.pPlus():
             self.movement = 1
             self.xPos += 1
             self.absxPos += 1
-            if self.xPos > 100:
-                self.xPos = -100
+            if self.xPos > self.N_x:
+                self.xPos = -self.N_x
         else:
             self.movement = 0
         
