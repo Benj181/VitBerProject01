@@ -1,7 +1,7 @@
 from config import random, np, beta_k
 
 class Particle:
-    def __init__(self, potentialFunction, id, alpha, startPos = 0):
+    def __init__(self, potentialFunction, alpha, id = False, startPos = 0):
         self.alpha = alpha
         self.id = id
         self.xPos = startPos
@@ -63,4 +63,7 @@ class Particle:
         return float(self.pMinus()), float(1 - (self.pPlus() + self.pMinus())), float(self.pPlus())
 
     def __str__(self):
-        return f"{self.id + 1}"
+        if self.id:
+            return f"{self.id + 1}: {self.xPos}"
+        else:
+            return f"{self.xPos}"
