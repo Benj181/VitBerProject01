@@ -240,6 +240,7 @@ def getData(choice=None):
     else:
         print("Invalid choice")
         return None
+#------------------------------------------------------------------------
 
 # generateData(N_x * 1, opg3b=True)
 # generateData(N_x * 1, opg3c=True)
