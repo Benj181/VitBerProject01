@@ -2,8 +2,9 @@ import random
 import numpy as np
 import matplotlib.pyplot as plt
 from collections import Counter
+from scipy.special import erfc
 
-def sawtoothPotential(x, alpha): # can only get values between -100 and 100
+def sawtoothPotential(x, alpha, N_x): # can only get values between -100 and 100
     if x > -N_x and x <= -(1 - alpha) * N_x:
         return k * (x + N_x) / (alpha * N_x)
     if x > -(1 - alpha) * N_x and x <= 0:
@@ -45,12 +46,11 @@ def progressBar(iterable, prefix = '', suffix = '', decimals = 1, length = 100, 
     print()
 
 N_x = 100 # steps per potetial period
-beta_k = 1000
 k = 1
 
 if __name__ == "__main__":
-    x = np.linspace(-N_x, N_x, 100)
-    y = [sawtoothPotential(i, 1) for i in x]
-    plt.plot(x, y, 'o')
+    x = np.linspace(-N_x, N_x, 1000)
+    y = [sawtoothPotential(i, 0.8, N_x) for i in x]
+    plt.plot(x, y)
     plt.grid()
     plt.show()
